@@ -1,6 +1,6 @@
 import { X, History, Settings, Star } from 'lucide-react';
 
-export default function Sidebar({ isOpen, toggleSidebar }) {
+export default function Sidebar({ isOpen, toggleSidebar, onOpenSettings }) {
     return (
         <>
             {/* Backdrop */}
@@ -28,7 +28,13 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                         <Star size={18} className="text-indigo-400" />
                         Saved Papers
                     </button>
-                    <button className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200 cursor-pointer">
+                    <button
+                        onClick={() => {
+                            onOpenSettings();
+                            toggleSidebar();
+                        }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200 cursor-pointer"
+                    >
                         <Settings size={18} className="text-indigo-400" />
                         Settings
                     </button>

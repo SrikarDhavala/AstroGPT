@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+motor
+python-dotenv
+python-multipart
+google-generativeai
+langchain
+langchain-community
+langchain-google-genai
+chromadb
+pypdf
+passlib[bcrypt]
+dnspython
