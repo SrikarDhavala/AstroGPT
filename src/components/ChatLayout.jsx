@@ -10,6 +10,9 @@ export default function ChatLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // New state for loading spinners
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [responseDetail, setResponseDetail] = useState("detailed");
+  const [creativity, setCreativity] = useState(0.3);
+
   const [messages, setMessages] = useState([
     { role: 'bot', text: 'Greetings. Upload an astrophysics research paper (PDF) to begin our analysis.' }
   ]);
@@ -38,7 +41,7 @@ export default function ChatLayout() {
       setIsLoading(true);
 
       try {
-        const answer = await chatWithPDF(text);
+        const answer = await chatWithPDF(text, responseDetail, creativity);
         setMessages(prev => [...prev, { role: 'bot', text: answer }]);
       } catch (error) {
         setMessages(prev => [...prev, { role: 'bot', text: 'Error: Unable to reach the control center (Backend).' }]);
@@ -63,7 +66,7 @@ export default function ChatLayout() {
         </div>
       </div>
 
-      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+      <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} responseDetail={responseDetail} setResponseDetail={setResponseDetail} creativity={creativity} setCreativity={setCreativity} />
     </div>
   );
 }

@@ -9,9 +9,9 @@ load_dotenv()
 
 # Import our custom modules
 from database import db, users_collection
-from models import UserCreate, UserResponse, UserLogin, ChatRequest
+from models import UserCreate, UserResponse, UserLogin, ChatRequest, QuizRequest
 from auth import get_password_hash, verify_password
-from pdf_service import get_pdf_text, get_text_chunks, get_vector_store, get_answer_from_pdf
+from pdf_service import get_pdf_text, get_text_chunks, get_vector_store, get_answer_from_pdf, generate_quiz_data
 
 # --- Startup Event ---
 @asynccontextmanager
@@ -99,7 +99,19 @@ async def upload_pdf(file: UploadFile = File(...)):
 @app.post("/chat")
 async def chat(request: ChatRequest):
     try:
-        response = get_answer_from_pdf(request.question)
+        response = get_answer_from_pdf(request.question, detail_level=request.detailLevel, creativity=request.creativity)
         return {"answer": response}
+    except Exception as e:
+        return {"error": str(e)}
+
+# 5. Generate Quiz
+@app.post("/generate-quiz")
+async def generate_quiz(request: QuizRequest):
+    try:
+        # Call the function we built in pdf_service.py
+        quiz_data = generate_quiz_data(request.topic, request.difficulty, request.length, request.format)
+        
+        # Send the JSON array back to the React frontend
+        return {"questions": quiz_data}
     except Exception as e:
         return {"error": str(e)}

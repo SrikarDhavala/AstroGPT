@@ -10,7 +10,7 @@ export default function Auth() {
         e.preventDefault();
         // In a real app, you would validate credentials here.
         // For now, we redirect to the chat interface.
-        navigate('/chat');
+        navigate('/select-mode');
     };
 
     return (

@@ -14,9 +14,18 @@ class UserLogin(BaseModel):
 # Model for answering questions
 class ChatRequest(BaseModel):
     question: str
+    detailLevel: str = "detailed"
+    creativity: float = 0.3
 
 # Model for User Response (what we send back to frontend)
 class UserResponse(BaseModel):
     id: str
     fullname: str
     email: str
+
+# Model for generating a quiz
+class QuizRequest(BaseModel):
+    topic: str
+    difficulty: str = "intermediate"
+    length: int = 8
+    format: str = "mixed"

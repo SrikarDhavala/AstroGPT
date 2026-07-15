@@ -1,6 +1,9 @@
-import { X, History, Settings, Star } from 'lucide-react';
+import { X, History, Settings, Star, PlusCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar({ isOpen, toggleSidebar, onOpenSettings }) {
+    const navigate = useNavigate();
+
     return (
         <>
             {/* Backdrop */}
@@ -20,13 +23,19 @@ export default function Sidebar({ isOpen, toggleSidebar, onOpenSettings }) {
                     </button>
                 </div>
                 <div className="p-4 space-y-2">
+                    <button
+                        onClick={() => {
+                            navigate('/select-mode'); // Send user to mode selection
+                            toggleSidebar();          // Close the sidebar automatically
+                        }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-500/20 transition-colors text-emerald-400 font-medium cursor-pointer mb-4"
+                    >
+                        <PlusCircle size={18} />
+                        New Chat
+                    </button>
                     <button className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200 cursor-pointer">
                         <History size={18} className="text-indigo-400" />
                         Chat History
-                    </button>
-                    <button className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/10 transition-colors text-slate-200 cursor-pointer">
-                        <Star size={18} className="text-indigo-400" />
-                        Saved Papers
                     </button>
                     <button
                         onClick={() => {
